@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Register</title>
+		<link rel="stylesheet" href="{{ url_for('static', type= 'text/css',filename='style.css') }}">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+		<style>
+			.alone{
+    color:black;
+    text-align:center;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: 'Heebo', sans-serif;
+    letter-spacing: 1.5px;
+    padding:20px;
+    width:200px;
+}
+.navigation-bar {
+    display: flex;
+
+}
+
+.many
+{
+width: 200px;
+
+    background-color: #3274d6;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: 'Heebo', sans-serif;
+    letter-spacing: 1.5px;
+    color:white;
+    padding: 20px;
+}
+
+		</style>
+	</head>
+	<body>
+		<div class="register">
+			<h1>Register</h1>
+			<div class="navigation-bar">
+
+
+	<a style="text-decoration:none;" href=""><div class = "alone">Teachers</div></a>
+            <a style="text-decoration:none;" href="{{ url_for('registeroth') }}"><div class = "many">Others</div></a>
+	</div>
+
+			<form action="{{ url_for('register') }}" method="post" autocomplete="off">
+
+			<label for="username">
+					<i class="fas fa-user"></i>
+				</label>
+
+				<input style="width:310px;height:50px;" type="text" name="username" placeholder="&nbsp;&nbsp;&nbsp;Username"  id="username" required /> <br>
+<br><br>
+				<label for="password">
+					<i class="fas fa-lock"></i>
+				</label>
+
+				<input type="password" name="password" placeholder="Password" id="password" required>
+				<label for="email">
+					<i class="fas fa-envelope"></i>
+				</label>
+				<input type="email" name="email" placeholder="Email" id="email" required>
+				<label for="username">
+					<i class="fas fa-graduation-cap"></i>
+				</label>
+
+				<input style="width:310px;height:50px"; type="text" name="sname" placeholder="&nbsp;&nbsp;&nbsp;School Name" id="username" required/><br>
+<br><br>
+
+				<label for="username">
+					<i class="fas fa-mobile"></i>
+				</label>
+
+				<input style="width:310px;height:50px"; type="tel" name="mno" placeholder="Mobile No"  id="username" pattern="[0-9]{10}" id="username" required oninvalid="this.setCustomValidity('Enter 10 digit number')"oninput="this.setCustomValidity('')"/> <br>
+				<br><br>
+
+				<label for="username">
+					<i class="fas fa-map-marker"></i>
+				</label>
+
+				<input style="width:310px;height:50px;" type="text" name="city" placeholder="&nbsp;&nbsp;&nbsp;City"  id="username" required /> <br>
+<br><br>
+
+				<label for="username">
+					<i class="fas fa-globe"></i>
+				</label>
+
+				<input style="width:310px;height:50px;" type="text" name="state" placeholder="&nbsp;&nbsp;&nbsp;State"  id="username" required /> <br>
+<br><br>
+
+
+				<div class="msg">{{ msg }}</div>
+				<input type="submit" value="Register">
+			</form>
+		</div>
+	</body>
+</html>

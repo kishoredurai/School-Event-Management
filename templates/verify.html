@@ -1,0 +1,68 @@
+<html>
+  <head>
+  <title>Password Reset</title>
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+
+  <link rel="stylesheet" media="all"
+    href="https://cdnjs.cloudflare.com/ajax/libs/authy-form-helpers/2.3/form.authy.min.css"
+    data-turbolinks-track="reload" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/authy-form-helpers/2.3/form.authy.min.js"
+    data-turbolinks-track="reload"></script>
+</head>
+
+<body>
+  <!-- <h1>Verify your phone number</h1> -->
+
+  <div class="login">
+    <h1>Password Reset</h1>
+
+    <form action="/verify" accept-charset="UTF-8" method="post">
+      <label for="username">
+        <i class="fas fa-user"></i>
+      </label>
+      <input type="text" name="token" id="token" placeholder="OTP" required>
+
+      <div class="msg">{{ msg }}</div>
+      <button type="submit" name="button" class="btn voilet">Verify</button>
+    </form>
+    <br>
+
+  </div>
+
+  <!-- <body>
+    <h1>Challenge</h1>
+
+    <form action="/verify" accept-charset="UTF-8" method="post">
+      <div>
+        <label>Enter the code you were sent:</label>
+        <input name="token" id="token"></select>
+      </div>
+      <button name="button" type="submit">Verify</button>
+    </form> -->
+  </body>
+  <style>
+    .btn {
+      border-radius: 5px;
+      padding: 14px 28px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .voilet {
+      background-color: #642e7e;
+      color: white;
+    }
+
+    .voilet:hover {
+      background-color: white;
+      border-color: #642e7e;
+      color: #642e7e;
+      border: 4px solid #642e7e;
+
+    }
+  </style>
+
+</html>
