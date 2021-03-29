@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html ><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+      <style>
+
+.course{
+font-family:Montserrat;
+color:black;
+background-color:#f0ede4;
+width:250px;height:280px;
+
+}
+.course1{
+margin: 0 auto;
+    padding: 5px;
+    position: relative
+
+width:250px;height:280px;
+
+}
+.course1:hover{
+   background-color:#b8b3a3;
+}
+.table{
+border-collapse: separate;
+  border-spacing: 140px 50px;
+
+
+
+}
+
+@media screen and (max-width: 500px) {
+
+            .course,
+            .course1,
+
+            {
+
+                width: 70%;
+            }
+            table {
+      border: 0;
+      border-spacing: 10% 8%;
+    }
+
+    table thead {
+      display: none;
+    }
+
+    table tr {
+      margin-bottom: 10px;
+      display: block;
+      border-bottom: 2px solid #ddd;
+    }
+
+    table td {
+      display: block;
+      text-align: left;
+      font-size: 13px;
+      border-bottom: 1px dotted #ccc;
+    }
+
+    table td:last-child {
+      border-bottom: 0;
+    }
+
+    table td:before {
+      content: attr(data-label);
+      float: left;
+      text-transform: uppercase;
+      font-weight: bold;
+      margin-right: 20px;
+    }
+        }
+      </style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends "students/navbar-template.html" %}
+{% block content %}
+
+<br><br><br><br>
+{{course[0]['sub']}}
+{{course[0]['grade']}}
+<table class="table">
+    {%for i in range(0, len1,3)%}
+    <tr>
+        <td>
+<a href="{{url_for('video', c=course1[i]['sub_cid'],s=0)}}"style="text-decoration: none;">
+<div class="course1">
+<div class="course">
+    <img src="{{url_for('static',filename='img/edu.jpg')}}" style="height:130px;width:250px">
+     <h4 style="color:black;"> {{course1[i]['sub_cou']}}</h4>
+<br>
+    Course id:  {{course1[i]['sub_cid']}}</div></div>
+
+</a>
+        </td>
+        {%if i+1 < len1%}
+                <td>
+
+
+<a href="{{url_for('video', c=course1[i+1]['sub_cid'],s=0)}}" style="text-decoration: none;">
+<div class="course1">
+<div class="course">
+    <img src="{{url_for('static',filename='img/edu.jpg')}}" style="height:130px;width:250px">
+     <h4 style="color:black;"> {{course1[i+1]['sub_cou']}}</h4>
+<br>
+    Course id:  {{course1[i+1]['sub_cid']}}</div></div>
+
+</a>
+        </td>
+        {% endif %}
+        {%if i+2 < len1%}
+                <td>
+<a href="{{url_for('video', c=course1[i+2]['sub_cid'],s=0)}}"style="text-decoration: none;">
+<div class="course1">
+<div class="course">
+    <img src="{{url_for('static',filename='img/edu.jpg')}}" style="height:130px;width:250px">
+      <h4 style="color:black;"> {{course1[i+2]['sub_cou']}}</h4>
+<br>
+    Course id:  {{course1[i+2]['sub_cid']}}</div></div>
+
+</a>
+        </td>
+        {% endif %}
+    </tr>
+<br><br>
+{%endfor%}
+</table>
+{% endblock %}
+ <script src="{{url_for('static',filename='js/nav.js')}}"></script>
+</body>
+</html>

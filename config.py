@@ -1,2 +1,0 @@
-AUTHY_API_KEY = 'F79FjHOmziWHkVTBA9K6MgqUvKww3qui'
-SECRET_KEY = '11sdcasd'

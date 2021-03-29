@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <title>BIT COURSES</title>
+
+</head>
+<style>
+a{
+
+color:white;
+}
+     a:hover {
+ color:black;
+}
+@media screen and (max-width: 500px) {
+.col-md-3 bg-light py-5 d-none d-sm-inline-block{
+
+width: 60%;
+}
+
+
+}
+
+
+</style>
+
+<body >
+{% extends "students/navbar-template.html" %}
+<br><br><br>
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9 p-3">
+
+                <div class="card">
+                    <div class="card-header" style="color:black;">
+                        Courses
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+
+<video class="w-75" controls >
+
+                                <source src="{{ url_for('static', filename = vid['link']) }}" type="video/mp4" >
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+
+                        <div class="p-2 text-muted text-center">
+                            Published by BIT
+                        </div>
+
+
+                        <div class="px-5">
+                            <h4 style="color:black">Description</h4>
+                            <p class="px-2" style="color:black">{{vid['descr']}}
+
+                            </p>
+                            <!--p class="px-2">This video created by author.</p>
+                            <p class="px-2">This video created by author.</p>
+                            <p class="px-2">This video created by author.</p-->
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 bg-light py-5 d-none d-sm-inline-block" >
+                <div class="list-group">
+
+                    {%for i in range(0,len2)%}
+                    {% if i==n %}
+
+                    <a href="{{url_for('video', c=vid['sub_cid'],s=i)}}" class="list-group-item list-group-item-action active" aria-current="true"> <i class="fas fa-arrow-circle-right"></i> Video {{i+1}}</a>
+                        {% else %}
+                    <a href="{{url_for('video', c=vid['sub_cid'],s=i)}}" class="list-group-item list-group-item-action" aria-current="false"><i class="fas fa-arrow-circle-right" style="color:black;"></i> Video {{i+1}}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                </div></div></div></div>
+
+
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+    -->
+{% endblock %}
+</body>
+
+</html>
