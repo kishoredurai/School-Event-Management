@@ -7,12 +7,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+    <link rel='stylesheet' type="text/css" href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
 
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
 <style>
 
 
-
+body::before{
+    content: "";
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+     height: 100%;
+    z-index: -1;
+    background-image: url({{ url_for('static', filename='img/hero_1.jpg') }});
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+    background-position: center;
+    opacity: 0.5; /*Value from 0.0 to 1.0*/
+}
 .profile{
 background-color: white;
 height:260px;
@@ -34,17 +52,11 @@ color:black;
 background-color:#f0ede4;
 width:250px;height:280px;
 
-}
-.course1{
-margin: 0 auto;
-    padding: 5px;
-    position: relative
-
-width:250px;height:280px;
 
 }
-.course1:hover{
-   background-color:#b8b3a3;
+
+.course:hover{
+    box-shadow: 0 0 11px rgba(33,33,33,.8)
 }
 .table{
 border-collapse: separate;
@@ -102,7 +114,10 @@ border-collapse: separate;
         }
 </style>
 </head>
-<body>
+
+ <body onload="myFunction()">
+
+
 {% extends "students/navbar-template.html" %}
 <br><br><br>
 {% block content %}
@@ -116,7 +131,7 @@ border-collapse: separate;
 
 </div>
 -->
-<br><br><br>
+<br>
 
 <h3 style="color:black;text-align:center;">Grade: {{b}}</h3>
 
@@ -124,13 +139,13 @@ border-collapse: separate;
     {%for i in range(0, len,3)%}
     <tr>
         <td>
-<a href="{{url_for('get_course',a=course[i]['course_name'],b=b)}}"style="text-decoration: none;">
-<div class="course1">
+<a href="{{url_for('get_course',a=subject[i]['subject_id'],b=b)}}"style="text-decoration: none;">
+
 <div class="course">
-    <img src="{{url_for('static',filename='img/edu.jpg')}}" style="height:130px;width:250px">
-     <h2 style="color:black;"> {{course[i]['course_name']}}</h2>
+    <img src={{url_for('static',filename="img/{0}.jpg".format(subject[i]['subject_name']))}} style="height:180px;width:250px">
+     <h2 style="color:black;"> {{subject[i]['subject_name']}}</h2>
 <br>
-    Course id:  {{course[i]['course_id']}}</div></div>
+    Course id:  {{subject[i]['subject_id']}}</div>
 
 </a>
         </td>
@@ -138,26 +153,26 @@ border-collapse: separate;
                 <td>
 
 
-<a href="{{url_for('get_course',a=course[i+1]['course_name'],b=b)}}"style="text-decoration: none;">
-<div class="course1">
+<a href="{{url_for('get_course',a=subject[i+1]['subject_id'],b=b)}}"style="text-decoration: none;">
+
 <div class="course">
-    <img src="{{url_for('static',filename='img/edu.jpg')}}" style="height:130px;width:250px">
-     <h2 style="color:black;"> {{course[i+1]['course_name']}}</h2>
+    <img src={{url_for('static',filename="img/{0}.jpg".format(subject[i+1]['subject_name']))}} style="height:180px;width:250px">
+     <h2 style="color:black;"> {{subject[i+1]['subject_name']}}</h2>
 <br>
-    Course id:  {{course[i+1]['course_id']}}</div></div>
+    Course id:  {{subject[i+1]['subject_id']}}</div>
 
 </a>
         </td>
         {% endif %}
         {%if i+2 < len%}
                 <td>
-<a href="{{url_for('get_course',a=course[i+2]['course_name'],b=b)}}"style="text-decoration: none;">
-<div class="course1">
+<a href="{{url_for('get_course',a=subject[i+2]['subject_id'],b=b)}}"style="text-decoration: none;">
+
 <div class="course">
-    <img src="{{url_for('static',filename='img/edu.jpg')}}" style="height:130px;width:250px">
-      <h2 style="color:black;"> {{course[i+2]['course_name']}}</h2>
+    <img src={{url_for('static',filename="img/{0}.jpg".format(subject[i+2]['subject_name']))}} style="height:180px;width:250px">
+      <h2 style="color:black;"> {{subject[i+2]['subject_name']}}</h2>
 <br>
-    Course id:  {{course[i+2]['course_id']}}</div></div>
+    Course id:  {{subject[i+2]['subject_id']}}</div>
 
 </a>
         </td>
@@ -166,8 +181,20 @@ border-collapse: separate;
 <br><br>
 {%endfor%}
 </table>
+{% if sweetalert==1 %}
+<script>
 
+function myFunction() {
+  Swal.fire("Welcome {{res['stname']}}");
+}
+</script>
+{% endif %}
 {% endblock %}
-<script src="{{url_for('static',filename='js/nav.js')}}"></script>
+<script src="{{url_for('static',filename='js/nav.js')}}">
+
+
+</script>
+
 </body>
+
 </html>

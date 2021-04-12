@@ -20,15 +20,15 @@
             <div class="line3"></div>
         </div>
         <ul class="nav-links">
-            <li ><a href={{url_for('home')}} >Home</a></li>
+            <li ><a href="{{url_for('home',num=0)}}" >Home</a></li>
 
 
-			
+
 			<li><div class="dropdown">
                 <button  class="dropbtn">SUBJECTS</button>
   <div class="dropdown-content">
       {%for i in range(0, len)%}
-    <a href="{{url_for('get_course',a=course[i]['course_name'],b=b)}}"style="text-decoration: none;">{{course[i]['course_name']}}</a>
+    <a href="{{url_for('get_course',a=subject[i]['subject_id'],b=b)}}"style="text-decoration: none;">{{subject[i]['subject_name']}}</a>
    {%endfor%}
   </div></div>
 </li>
@@ -39,8 +39,8 @@
                 <a href="{{url_for('profile')}}" >Profile</a>
             </div></div></li>
             <!-- <li><a href="#">Contact us</a></li>-->
-            
-            
+
+
         </ul>
     </nav>
     <div class="container">

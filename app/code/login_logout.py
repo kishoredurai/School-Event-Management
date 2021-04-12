@@ -12,8 +12,14 @@ def login():
         print(password)
 
 
+
+
+
+
+
+
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM students WHERE mno = %s AND pass= %s', (username, password))
+        cursor.execute('SELECT * FROM student WHERE student_contact = %s AND student_password= %s', (username, password))
         # Fetch one record and return result
         account = cursor.fetchone()
         pro = []
@@ -23,9 +29,9 @@ def login():
             # global session
             session['loggedin'] = True
 
-            session['username'] = account['mno']
-            session['password'] = account['pass']
-            session['grade'] = account['grade']
+            session['username'] = account['student_contact']
+            session['password'] = account['student_password']
+            session['grade'] = account['student_grade']
 
             # if session
             # Redirect to home page
@@ -35,7 +41,7 @@ def login():
             #   print(course[i]['course_id'])
             #  print(course[i]['course_name'])
 
-            return redirect(url_for('home'))
+            return redirect(url_for('home',num=1))
 
         else:
             # Account doesnt exist or username/password incorrect

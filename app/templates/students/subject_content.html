@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+   body::before{
+    content: "";
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+     height: 100%;
+    z-index: -1;
+    background-image: url({{ url_for('static', filename='img/hero_1.jpg') }});
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+    background-position: center;
+    opacity: 0.5; /*Value from 0.0 to 1.0*/
+}
+
+h2{
+padding-left: 50px;
+color:#565753;
+
+
+}
+    h1{
+    color:black;
+    font-family:verdana;
+
+    }
+        .con{
+        background-color: white;
+        opacity: 0.95;
+        justify-content: flex-end;
+
+        align:center;
+        border-radius:10px;
+
+        margin-left:30px;
+        margin-rigth:30px;
+        width:95%;
+        height:280px;
+
+
+        }
+
+        .button {
+       border-radius: 4px;
+  background-color: #61DAFB;
+  border: none;
+  color:  white;
+  text-align: center;
+  font-size: 16px;
+  padding: 20px;
+ float:right;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+
+ }
+ .button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+.button:hover  {
+  background-color:DodgerBlue;
+
+}
+
+.button:hover span {
+  padding-right: 25px;
+
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+    </style>
+</head>
+{% extends "students/navbar-template.html" %}
+{% block content %}
+<body>
+<br><br><br>
+{%for i in range(0, len2)%}
+<div class="con">
+    <h1>{{i+1}} {{vid[i]['chapter_name']}}</h1>
+    <br><br>
+    <h2>{{vid[i]['chapter_description']}}</h2>
+    <br>
+  <a href="{{url_for('video', c=vid[i]['course_chapter_id'],s=0)}}">
+      <button class="button"><span>Go to videos </span></button></a>
+</div>
+<br><br>
+{% endfor %}
+{% endblock %}
+</body>
+</html>

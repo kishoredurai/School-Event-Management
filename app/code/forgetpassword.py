@@ -10,7 +10,7 @@ def verification():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
         cursor.execute(
-            'SELECT * FROM students WHERE mno= %s ', [phone_number])
+            'SELECT * FROM student WHERE student_contact= %s ', [phone_number])
         account = cursor.fetchone()
 
         cursor.execute(
