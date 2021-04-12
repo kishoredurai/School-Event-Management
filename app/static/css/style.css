@@ -21,6 +21,8 @@ input {
 
 .forms-container {
   position: absolute;
+  overflow-y: scroll;
+
   width: 100%;
   height: 100%;
   top: 0;
@@ -28,7 +30,7 @@ input {
 }
 
 .signin-signup {
-  position: absolute;
+  position: relative;
   top: 50%;
   transform: translate(-50%, -50%);
   left: 75%;
@@ -39,6 +41,8 @@ input {
   z-index: 5;
 }
 
+
+
 form {
   display: flex;
   align-items: center;
@@ -46,7 +50,7 @@ form {
   flex-direction: column;
   padding: 0rem 5rem;
   transition: all 0.2s 0.7s;
-  overflow: hidden;
+
   grid-column: 1 / 2;
   grid-row: 1 / 2;
 }
@@ -102,7 +106,21 @@ form.sign-in-form {
   color: #333;
 }
 
+.input-field select {
+  background: none;
+  outline: none;
+  border: none;
+  line-height: 1;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+}
+
 .input-field input::placeholder {
+  color: #aaa;
+  font-weight: 500;
+}
+.input-field select::placeholder {
   color: #aaa;
   font-weight: 500;
 }
