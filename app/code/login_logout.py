@@ -3,45 +3,26 @@ from app import *
 @app.route('/')
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    msg = ''
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        # Create variables for easy access
+    if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        print(username)
-        print(password)
-
-
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM students WHERE mno = %s AND pass= %s', (username, password))
-        # Fetch one record and return result
+        cursor.execute('SELECT * FROM student WHERE student_contact = %s AND student_password= %s', (username, password))
         account = cursor.fetchone()
-        pro = []
-
         if account:
             # Create session data, we can access this data in other routes
             # global session
             session['loggedin'] = True
-
-            session['username'] = account['mno']
-            session['password'] = account['pass']
-            session['grade'] = account['grade']
-
-            # if session
-            # Redirect to home page
-
-
-            # for i in range(len(course)):
-            #   print(course[i]['course_id'])
-            #  print(course[i]['course_name'])
-
-            return redirect(url_for('home'))
-
+            session['username'] = account['student_contact']
+            session['user_type'] = 'student'
+            session['id'] = account['student_id']
+            session['grade'] = account['student_grade']
+            return redirect(url_for('home',num=1))
         else:
-            # Account doesnt exist or username/password incorrect
-            msg = 'Incorrect username/password!'
+            flash("Invalid Username or Password !")
+            return redirect(url_for('login'))
 
-    return render_template('students/index.html', msg=msg)
+    return render_template('login.html')
 
 @app.route('/logout/')
 def logout():

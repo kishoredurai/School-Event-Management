@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session,Response
+from flask import Flask, render_template, request, redirect, url_for, session,Response,flash
 import MySQLdb.cursors
 import re
 import moviepy.editor
@@ -7,16 +7,19 @@ from flask_mysqldb import MySQL
 from authy.api import AuthyApiClient
 import mysql.connector
 from mysql import connector
+import rsa
 
+publicKey, privateKey = rsa.newkeys(512)
 
 
 app = Flask(__name__)
 mysql = MySQL(app)
 app.secret_key = 'your secret key'
-app.config['MYSQL_HOST'] = '127.0.0.1'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'sem'
+app.config['MYSQL_HOST'] = '121.200.55.42'
+app.config['MYSQL_PORT'] = 4063
+app.config['MYSQL_USER'] = 'cloud'
+app.config['MYSQL_PASSWORD'] = 'cloud@123'
+app.config['MYSQL_DB'] = 'elearning'
 
 mail = Mail(app)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
