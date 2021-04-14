@@ -13,9 +13,9 @@ from mysql import connector
 app = Flask(__name__)
 mysql = MySQL(app)
 app.secret_key = 'your secret key'
-app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_HOST'] = '127.0.0.1'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'barathg'
+app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'sem'
 
 mail = Mail(app)
