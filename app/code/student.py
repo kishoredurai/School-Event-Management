@@ -1,39 +1,15 @@
 from app import  *
 
 @app.route('/home', methods=["GET", "POST"])
-
-
-
 def home():
-
-
-    if 'username' in session:
-        num = int(request.args['num'])
-        username = session['username']
-        pas=session['password']
-
-        print(username)
-
-
-
-
-
-
-
+    if 'username' in session and session.get("user_type") == 'student':
+        stu_id=session.get('id')
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM student WHERE student_contact = %s', (username))
-        # Fetch one record and return result
+        cursor.execute('SELECT * FROM student WHERE student_id = %s',[stu_id])
         account = cursor.fetchone()
-        print(account)
-
-
-        cursor.execute('SELECT distinct subject.subject_name,course.subject_id FROM subject,course where course.subject_id=subject.subject_id and course.course_grade=%s', (account['student_grade'],))
+        cursor.execute('SELECT distinct subject.subject_name,course.subject_id FROM subject,course where course.subject_id=subject.subject_id and course.course_grade=%s',[account['student_grade']])
         subject = cursor.fetchall()
-        print(subject)
-
-
-
-        return render_template('students/home.html', res=account, subject=subject, len=len(subject),b=account['student_grade'],sweetalert=num)
+        return render_template('students/student_home.html', res=account, subject=subject, len=len(subject),b=account['student_grade'])
     else:
         return redirect(url_for('login'))
 

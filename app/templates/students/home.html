@@ -115,7 +115,7 @@ border-collapse: separate;
 </style>
 </head>
 
- <body onload="myFunction()">
+ <body>
 
 
 {% extends "students/navbar-template.html" %}
@@ -181,14 +181,7 @@ border-collapse: separate;
 <br><br>
 {%endfor%}
 </table>
-{% if sweetalert==1 %}
-<script>
 
-function myFunction() {
-  Swal.fire("Welcome {{res['stname']}}");
-}
-</script>
-{% endif %}
 {% endblock %}
 <script src="{{url_for('static',filename='js/nav.js')}}">
 
