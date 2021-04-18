@@ -13,6 +13,7 @@ def home():
     else:
         return redirect(url_for('login'))
 
+
 @app.route("/get_course", methods=["GET", "POST"])
 def get_course():
     if 'username' in session:
@@ -20,11 +21,6 @@ def get_course():
         a = request.args.get('a')
         b= request.args.get('b')
         c = request.args.get('c')
-        print(a)
-        print(b)
-
-
-
 
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('Select * from course where course_grade=%s and subject_id=%s ', [b, a])
@@ -35,7 +31,7 @@ def get_course():
         cursor.execute('SELECT * FROM student WHERE student_contact  = %s', (username,))
         account = cursor.fetchone()
         session['loggedin'] = False
-        return render_template('students/subcourse.html',course1=course1,res=account,subject=subject,len1=len(course1),len=len(subject),b=b,c=c)
+        return render_template('students/course_chapter.html',course1=course1,res=account,subject=subject,len1=len(course1),len=len(subject),b=b,c=c)
     else:
         return redirect(url_for('login'))
         
@@ -169,11 +165,36 @@ def change_profile_image():
 def test():
     return render_template('students/course_enroll.html')
 
-#@app.route('/enroll_course',method=['POST'])
-#def enroll_course():
- #   if 'username' in session and request.method == 'POST':
+@app.route('/course_enroll', methods=["POST", "GET"])
+def course_enroll():
+    test=0
+    if 'username' in session and session.get("user_type") == 'student':
+        stu_id=session.get('id')
 
-  #      return 'c'
+        
+        if request.method == "POST":
+            
+            if request.form.get("enroll"):
+
+                result = request.form  # Get the data
+                course = result["enroll"]
+                cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+                cursor.execute('insert into course_enrollment(student_id, course_id, enroll_status) values(%s,%s,"Registered")', [stu_id,course])
+                mysql.connection.commit()
+                flash("Course Enrolled Successfully!")
+                return redirect(url_for('course_enroll',courseid=course)) 
+
+
+        course_id = request.args.get('courseid')
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('Select * from course where course_id = %s', [course_id])
+        cc = cursor.fetchone()
+        cursor.execute('Select * from course_enrollment where  course_id = %s', [course_id])
+        courseenrol = cursor.fetchall()
+        if(courseenrol):
+            test=1
+        
+        return render_template('students/course_enroll.html',data=cc,test=test)
 
 
 

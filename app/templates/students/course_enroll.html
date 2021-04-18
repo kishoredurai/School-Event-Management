@@ -1,42 +1,76 @@
-
-
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-      <title>Home - Brand</title>
-      <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
-    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/fontawesome-all.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/ionicons.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/fontawesome5-overrides.min.css') }}">
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/styles1.min.css')}}">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
-   </head>
-   <body>
 
-      <br><br><br><br><br><br>
-      <div id="empresa" style="padding: 20px;margin: 1px;color: rgb(0,0,0);background: #546270;height: 375px;">
-         <div class="container">
-            <div class="row">
-               <div class="col-sm-6 col-md-7 col-lg-7">
-                  <h1>Lorem ipsum</h1>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis mauris accumsan, aliquet dui vel, rutrum dolor. Nunc vitae auctor metus. Quisque posuere nibh ut sem tincidunt, quis feugiat elit lobortis. Sed ut fringilla purus. Suspendisse volutpat ex non sem vehicula venenatis ut sed purus. Nunc eget fermentum metus, non consectetur velit. Donec semper leo a tellus posuere mollis. Duis a eleifend metus. Sed viverra enim sit amet mattis viverra. Ut euismod viverra lectus id aliquam. Cras eget odio mauris. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec ipsum nulla, vestibulum id diam eu, malesuada malesuada ex. Vestibulum et volutpat mauris. Donec sagittis sem vitae lacinia pellentesque. Ut mattis viverra aliquam. </p>
-               </div>
-               <div class="col-sm-6 col-md-5 col-lg-5" style="border-color: rgb(0, 0, 0);border-top-color: rgb(0,;border-right-color: 0,;border-bottom-color: 0);border-left-color: 0,;background: #17193c;">
-                  <img style="width: 446px;height: 276px;"><br><br><button class="btn btn-primary" type="button">Enroll</button><button class="btn btn-primary text-end" type="button" style="background: rgb(255,14,14);">Go To Videos</button>
-                  <div>
-                     <p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis mauris accumsan, aliquet dui vel, rutrum dolor. Nunc vitae auctor metus. Quisque posuere nibh ut sem tincidunt, quis feugiat elit lobortis. Sed ut fringilla purus. Suspendisse volutpat ex non sem vehicula venenatis ut sed purus. Nunc eget fermentum metus, non consectetur velit. Donec semper leo a tellus posuere mollis. Duis a eleifend metus. Sed viverra enim sit amet mattis viverra. Ut euismod viverra lectus id aliquam. Cras eget odio mauris. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec&nbsp;</strong></p>
-                  </div>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+   <title>Home - Brand</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
+   <link rel="stylesheet" href="{{ url_for('static', filename='fonts/fontawesome-all.min.css') }}">
+   <link rel="stylesheet" href="{{ url_for('static', filename='fonts/font-awesome.min.css') }}">
+   <link rel="stylesheet" href="{{ url_for('static', filename='fonts/ionicons.min.css') }}">
+   <link rel="stylesheet" href="{{ url_for('static', filename='fonts/fontawesome5-overrides.min.css') }}">
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles1.min.css')}}">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</head>
+
+<body>
+   {% with messages = get_flashed_messages() %}
+   {% if messages %}
+     {% for message in messages %}
+       <script>
+          swal("{{message}}", "Please have a nice knowledge", "success");
+       </script>
+      {% endfor %}
+      {% endif %}
+   {% endwith %}
+
+   <br><br><br><br><br><br>
+   <div id="empresa" style="padding: 20px;margin: 1px;color: rgb(0,0,0);background: #546270;height: 375px;">
+      <div class="container">
+         <div class="row">
+
+            <div class="col-sm-6 col-md-7 col-lg-7">
+               <h1>{{data.course_name}}</h1>
+               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis mauris accumsan, aliquet dui vel,
+                  rutrum dolor. Nunc vitae auctor metus. Quisque posuere nibh ut sem tincidunt, quis feugiat elit
+                  lobortis. Sed ut fringilla purus. Suspendisse volutpat ex non sem vehicula venenatis ut sed purus.
+                  Nunc eget fermentum metus, non consectetur velit. Donec semper leo a tellus posuere mollis. Duis a
+                  eleifend metus. Sed viverra enim sit amet mattis viverra. Ut euismod viverra lectus id aliquam.
+                  Cras eget odio mauris. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+                  inceptos himenaeos. Donec ipsum nulla, vestibulum id diam eu, malesuada malesuada ex. Vestibulum et
+                  volutpat mauris. Donec sagittis sem vitae lacinia pellentesque. Ut mattis viverra aliquam. </p>
+            </div>
+            <div class="col-sm-6 col-md-5 col-lg-5"
+               style="border-color: rgb(0, 0, 0);border-top-color: rgb(0,;border-right-color: 0,;border-bottom-color: 0);border-left-color: 0,;background: #17193c;">
+               <img style="width: 446px;height: 276px;"><br><br> <form action="/course_enroll" method="POST">
+               {% if (test==0) %}<button type="submit"  class="btn btn-primary" name="enroll" value="{{data.course_id}}">Enroll</button>{% endif %}
+               {% if (test==1) %}<a class="btn btn-primary text-end" type="button"href="{{url_for('sub_content',c=data.course_id)}}" style="background: rgb(255,14,14);">Go To Videos</a>{% endif %}
+            </form>
+               <div>
+                  <p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis mauris accumsan,
+                        aliquet dui vel, rutrum dolor. Nunc vitae auctor metus. Quisque posuere nibh ut sem
+                        tincidunt, quis feugiat elit lobortis. Sed ut fringilla purus. Suspendisse volutpat ex non
+                        sem vehicula venenatis ut sed purus. Nunc eget fermentum metus, non consectetur velit. Donec
+                        semper leo a tellus posuere mollis. Duis a eleifend metus. Sed viverra enim sit amet mattis
+                        viverra. Ut euismod viverra lectus id aliquam. Cras eget odio mauris. Class aptent taciti
+                        sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec&nbsp;</strong>
+                  </p>
                </div>
             </div>
+
+
          </div>
       </div>
-        <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
-      <script src="{{ url_for('static', filename='js/script1.min.js') }}"></script>
-   </body>
+   </div>
+   <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
+   <script src="{{ url_for('static', filename='js/script1.min.js') }}"></script>
+ 
+</body>
+
 </html>
