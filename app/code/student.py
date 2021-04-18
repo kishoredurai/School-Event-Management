@@ -16,8 +16,10 @@ def home():
 @app.route("/get_course", methods=["GET", "POST"])
 def get_course():
     if 'username' in session:
+        username = session['username']
         a = request.args.get('a')
         b= request.args.get('b')
+        c = request.args.get('c')
         print(a)
         print(b)
 
@@ -30,8 +32,10 @@ def get_course():
         print(course1)
         cursor.execute('SELECT distinct subject.subject_name,course.subject_id FROM subject,course where course.subject_id=subject.subject_id and course.course_grade=%s', (b))
         subject = cursor.fetchall()
+        cursor.execute('SELECT * FROM student WHERE student_contact  = %s', (username,))
+        account = cursor.fetchone()
         session['loggedin'] = False
-        return render_template('students/subcourse.html',course1=course1,subject=subject,len1=len(course1),len=len(subject),b=b)
+        return render_template('students/subcourse.html',course1=course1,res=account,subject=subject,len1=len(course1),len=len(subject),b=b,c=c)
     else:
         return redirect(url_for('login'))
         
@@ -42,17 +46,20 @@ def get_course():
 @app.route("/sub_content", methods=["GET", "POST"])
 def sub_content():
     if 'username' in session:
+        username = session['username']
 
 
         c = request.args.get('c')
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM student WHERE student_contact  = %s', (username,))
+        account = cursor.fetchone()
         cursor.execute('SELECT * FROM course_chapter WHERE course_id  = %s', (c,))
         vid = cursor.fetchall()
 
         cursor.execute('SELECT distinct subject.subject_name,course.subject_id FROM subject,course where course.subject_id=subject.subject_id and course.course_grade=%s',(session['grade'],))
         subject = cursor.fetchall()
 
-        return render_template('students/subject_content.html', vid=vid,len2=len(vid), subject=subject, len=len(subject),
+        return render_template('students/subject_content.html',res=account, vid=vid,len2=len(vid), subject=subject, len=len(subject),
                                b=session['grade'])
     else:
         return redirect(url_for('login'))
@@ -60,6 +67,7 @@ def sub_content():
 @app.route("/video", methods=["GET", "POST"])
 def video():
     if 'username' in session:
+        username = session['username']
         s=request.args.get('s')
         print(s)
         if s==None:
@@ -70,6 +78,8 @@ def video():
 
         c = request.args.get('c')
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM student WHERE student_contact  = %s', (username,))
+        account = cursor.fetchone()
         cursor.execute('SELECT * FROM content_video,course_chapter_content where content_video.chapter_content_id = course_chapter_content.chapter_content_id and course_chapter_content.course_chapter_id =%s ', (c,))
         content = cursor.fetchall()
         print(content)
@@ -79,7 +89,7 @@ def video():
         cursor.execute('SELECT distinct subject.subject_name,course.subject_id FROM subject,course where course.subject_id=subject.subject_id and course.course_grade=%s',(session['grade'],))
         subject = cursor.fetchall()
 
-        return render_template('students/video.html', content=content[n], len2=len(content), n=n, subject=subject, len=len(subject),
+        return render_template('students/video.html', content=content[n],res=account, len2=len(content), n=n, subject=subject, len=len(subject),
                                b=session['grade'])
     else:
         return redirect(url_for('login'))
@@ -89,24 +99,93 @@ def video():
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     if 'username' in session:
+        sa = request.args.get('sa')
 
         username = session['username']
         grade=session['grade']
 
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM students WHERE mno  = %s', (username,))
+        cursor.execute('SELECT * FROM student WHERE student_contact  = %s', (username,))
         account = cursor.fetchone()
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT course_id,course_name FROM course WHERE stan = %s', (grade))
-        course = cursor.fetchall()
-        b=account['grade']
+        cursor.execute('SELECT distinct subject.subject_name,course.subject_id FROM subject,course where course.subject_id=subject.subject_id and course.course_grade=%s',(session['grade'],))
+        subject = cursor.fetchall()
 
 
-        return render_template('students/student_profile.html',name=account,course=course,len=len(course),b=b)
+
+
+        return render_template('students/student_profile.html', res=account, subject=subject, len=len(subject),b=grade,sweetalert=sa)
     else:
         return redirect(url_for('login'))
         
-        
+
+@app.route("/update", methods=["GET", "POST"])
+def update():
+    if 'username' in session and request.method == 'POST':
+        username = session['username']
+        grade = session['grade']
+        fname = request.form['first_name']
+        lname = request.form['last_name']
+        sname=request.form['s_name']
+        dob=request.form['dob']
+        add = request.form['address']
+        city = request.form['city']
+        state = request.form['state']
+
+
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+        cursor.execute('update student set student_Fname= %s, student_Lname=%s , student_school=%s, student_dob=%s , student_address=%s, student_add_district=%s,student_add_state=%s where student_contact=%s', (fname,lname,sname,dob,add,city,state,username))
+        mysql.connection.commit()
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM student WHERE student_contact  = %s', (username,))
+        account = cursor.fetchone()
+        cursor.execute('SELECT distinct subject.subject_name,course.subject_id FROM subject,course where course.subject_id=subject.subject_id and course.course_grade=%s',(session['grade'],))
+        subject = cursor.fetchall()
+
+        return redirect(url_for('profile',sa=1))
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/change_profile_image', methods = ['POST'])
+def change_profile_image():
+    if 'username' in session and request.method == 'POST':
+        username = session['username']
+
+        f = request.files['file']
+        filename = secure_filename(f.filename)
+        path="static/img/profile_image/{0}".format(filename)
+        f.save(os.path.join(app.root_path, path))
+        path1="img/profile_image/{0}".format(filename)
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('update student set student_profile_image=%s WHERE student_contact  = %s', (path1,username,))
+        mysql.connection.commit()
+        return redirect(url_for('profile'))
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/test')
+def test():
+    return render_template('students/course_enroll.html')
+
+#@app.route('/enroll_course',method=['POST'])
+#def enroll_course():
+ #   if 'username' in session and request.method == 'POST':
+
+  #      return 'c'
+
+
+
+
+
+
+
+
+
+
+
+
 # @app.route("/changepwd", methods=["GET", "POST"])
 # def changepwd():
 #         msg=''

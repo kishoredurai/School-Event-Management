@@ -8,6 +8,8 @@ from authy.api import AuthyApiClient
 import mysql.connector
 from mysql import connector
 import rsa
+import os
+from werkzeug.utils import secure_filename
 
 publicKey, privateKey = rsa.newkeys(512)
 

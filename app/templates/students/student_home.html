@@ -47,7 +47,7 @@
                     <div class="row text-start justify-content-center align-items-center" style="text-align: center;">
 
                         <div class="col-md-6 col-xl-3 mb-4">
-                            <a href="{{url_for('get_course',a=subject[i]['subject_id'],b=b)}}"style="text-decoration: none;">
+                            <a href="{{url_for('get_course',a=subject[i]['subject_id'],b=b,c=subject[i]['subject_name'])}}"style="text-decoration: none;">
                             <div class="card shadow border-start-primary py-2" data-bss-hover-animate="pulse"><img class="card-img-top w-100 d-block" src={{url_for('static',filename="img/{0}.jpg".format(subject[i]['subject_name']))}} style="width: 100px;height: 200px;">
                                 <div class="card-body" style="height: 150px;">
                                     <div class="row align-items-center no-gutters">
@@ -61,7 +61,7 @@
                         </div>
                        {%if i+1 < len%}
                         <div class="col-md-6 col-xl-3 mb-4">
-                            <a href="{{url_for('get_course',a=subject[i+1]['subject_id'],b=b)}}"style="text-decoration: none;">
+                            <a href="{{url_for('get_course',a=subject[i+1]['subject_id'],b=b,c=subject[i+1]['subject_name'])}}"style="text-decoration: none;">
 
 
                             <div class="card shadow border-start-primary py-2" data-bss-hover-animate="pulse"><img class="card-img-top w-100 d-block" src={{url_for('static',filename="img/{0}.jpg".format(subject[i+1]['subject_name']))}} style="width: 100px;height: 200px;">
@@ -78,7 +78,7 @@
                      {% endif %}
                      {%if i+2 < len%}
                         <div class="col-md-6 col-xl-3 mb-4">
-                    <a href="{{url_for('get_course',a=subject[i+2]['subject_id'],b=b)}}"style="text-decoration: none;">
+                    <a href="{{url_for('get_course',a=subject[i+2]['subject_id'],b=b,c=subject[i+2]['subject_name'])}}"style="text-decoration: none;">
 
                             <div class="card shadow border-start-primary py-2" data-bss-hover-animate="pulse"><img class="card-img-top w-100 d-block" src={{url_for('static',filename="img/{0}.jpg".format(subject[i+2]['subject_name']))}} style="width: 100px;height: 200px;">
                                 <div class="card-body" style="height: 150px;">
