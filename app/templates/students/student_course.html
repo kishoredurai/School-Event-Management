@@ -1,0 +1,129 @@
+{% include 'include/student_header.html' %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Courses</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/fontawesome-all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/ionicons.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/fontawesome5-overrides.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
+</head>
+
+<body>
+
+
+
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                    <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                    </form>
+                    <ul class="navbar-nav flex-nowrap ms-auto">
+                        <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
+                            <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="me-auto navbar-search w-100">
+                                    <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
+                                        <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+
+                        <div class="d-none d-sm-block topbar-divider"></div>
+                        <li class="nav-item dropdown no-arrow">
+                            <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span><img class="border rounded-circle img-profile" src="avatars/avatar1.jpeg"></a>
+                                <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Settings</a><a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activity log</a>
+                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+                <center><h2 style="background-color:#03a1fc;color:white;width:150px;border-radius:50px;">Grade: {{course1[0]['course_grade']}}</h2></center>
+        <center><h2 style="background-color:#fca103;color:white;width:350px;border-radius:50px;">Subject: {{sub_name}}</h2></center>
+                 {%for i in range(0, len1,3)%}
+                <div class="container-fluid">
+                    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+
+                    </div>
+
+                    <div class="row text-start justify-content-center align-items-center" style="text-align: center;">
+
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <a href="{{url_for('course_enroll', courseid=course1[i]['course_id'])}}"style="text-decoration: none;">
+                            <div class="card shadow border-start-primary py-2" data-bss-hover-animate="pulse"><img class="card-img-top w-100 d-block" src={{url_for('static',filename='img/edu.jpg')}} style="width: 100px;height: 200px;">
+                                <div class="card-body" style="height: 150px;">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col me-2">
+                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Course id:  {{course1[i]['course_id']}}</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>{{course1[i]['course_name']}}</span></div><br><br>
+                                             <div class="text-dark fw-bold h5 mb-0"><span><button>Enroll</button></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div></a>
+                        </div>
+                       {%if i+1 < len1%}
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <a href="{{url_for('course_enroll', courseid=course1[i+1]['course_id'])}}"style="text-decoration: none;">
+
+
+                            <div class="card shadow border-start-primary py-2" data-bss-hover-animate="pulse"><img class="card-img-top w-100 d-block" src={{url_for('static',filename='img/edu.jpg')}} style="width: 100px;height: 200px;">
+                                <div class="card-body" style="height: 150px;">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col me-2">
+                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span class="text-success">  Course id:  {{course1[i+1]['course_id']}}</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>{{course1[i+1]['course_name']}}</span></div><br><br>
+
+                                            <div class="text-dark fw-bold h5 mb-0"><span><button>Enroll</button></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div></a>
+                        </div>
+                     {% endif %}
+                     {%if i+2 < len1%}
+                        <div class="col-md-6 col-xl-3 mb-4">
+                    <a href="{{url_for('course_enroll', courseid=course1[i+2]['course_id'])}}"style="text-decoration: none;">
+
+                            <div class="card shadow border-start-primary py-2" data-bss-hover-animate="pulse"><img class="card-img-top w-100 d-block" src={{url_for('static',filename='img/edu.jpg')}} style="width: 100px;height: 200px;">
+                                <div class="card-body" style="height: 150px;">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col me-2">
+                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span class="text-danger"> Course id:  {{course1[i+2]['course_id']}}</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>  {{course1[i+2]['course_name']}}</span></div><br><br>
+                                             <div class="text-dark fw-bold h5 mb-0"><span><button>Enroll</button></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div></a>
+                        </div>
+                     {% endif %}
+                    </div>
+
+                </div>
+            {%endfor%}
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bs-init.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+</body>
+
+</html>

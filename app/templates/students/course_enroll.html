@@ -1,3 +1,5 @@
+{% include 'include/student_header.html' %}
+
 <!DOCTYPE html>
 <html>
 
@@ -49,7 +51,7 @@
                style="border-color: rgb(0, 0, 0);border-top-color: rgb(0,;border-right-color: 0,;border-bottom-color: 0);border-left-color: 0,;background: #17193c;">
                <img style="width: 446px;height: 276px;"><br><br> <form action="/course_enroll" method="POST">
                {% if (test==0) %}<button type="submit"  class="btn btn-primary" name="enroll" value="{{data.course_id}}">Enroll</button>{% endif %}
-               {% if (test==1) %}<a class="btn btn-primary text-end" type="button"href="{{url_for('sub_content',c=data.course_id)}}" style="background: rgb(255,14,14);">Go To Videos</a>{% endif %}
+               {% if (test==1) %}<a class="btn btn-primary text-end" type="button"href="{{url_for('student_course_chapter',courseid=data.course_id)}}" style="background: rgb(255,14,14);">Go To Videos</a>{% endif %}
             </form>
                <div>
                   <p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis mauris accumsan,
