@@ -155,9 +155,11 @@ def course_enroll():
                 cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
                 cursor.execute('insert into course_enrollment(student_id, course_id, enroll_status) values(%s,%s,"Registered")', [stu_id,course])
                 mysql.connection.commit()
+                last_id=cursor.lastrowid
 
-
-
+                print(last_id)
+                # cursor.execute('insert into course_enroll_progress(course_chapter_id,enroll_id) select(course_chapter_id,"%s") from course_chapter where course_id=%s', [last_id,course])
+                # mysql.connection.commit()
                 #cursor.execute('insert into ')
 
                 flash("Course Enrolled Successfully!")
@@ -184,23 +186,20 @@ def course_enroll():
         return render_template('students/course_enroll.html',data=cc,test=test,res=account,details=details,len2=len(details), subject=subject, len=len(subject))
 
 
+
+############################    MY COURSE     ############################
+
 @app.route('/my_course', methods=["POST", "GET"])
 def my_course():
     if 'username' in session and session.get("user_type") == 'student':
         stu_id = session.get('id')
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-
         cursor.execute("select * from course_enrollment,course where course.course_id=course_enrollment.course_id and course_enrollment.student_id=%s",([stu_id]))
         my_course = cursor.fetchall()
-
         cursor.execute(
             'SELECT distinct subject.subject_name,course.subject_id FROM subject,course where course.subject_id=subject.subject_id and course.course_grade=%s',
             (session['grade'],))
         subject = cursor.fetchall()
-        print(stu_id)
-        print(my_course)
-        print(len(my_course))
-
         cursor.execute('SELECT * FROM student WHERE student_id = %s', [stu_id])
         account = cursor.fetchone()
 
