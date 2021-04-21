@@ -39,4 +39,4 @@ def studentreg():
     elif request.method == 'POST':
         # Form is empty... (no POST data)
         msg = 'Please fill out the form!'
-    return render_template('students/index.html',msg=msg)
+    return render_template('login.html',msg=msg)

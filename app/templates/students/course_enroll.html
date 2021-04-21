@@ -37,15 +37,15 @@
          <div class="row">
 
             <div class="col-sm-6 col-md-7 col-lg-7">
-               <h1>{{data.course_name}}</h1>
-               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis mauris accumsan, aliquet dui vel,
-                  rutrum dolor. Nunc vitae auctor metus. Quisque posuere nibh ut sem tincidunt, quis feugiat elit
-                  lobortis. Sed ut fringilla purus. Suspendisse volutpat ex non sem vehicula venenatis ut sed purus.
-                  Nunc eget fermentum metus, non consectetur velit. Donec semper leo a tellus posuere mollis. Duis a
-                  eleifend metus. Sed viverra enim sit amet mattis viverra. Ut euismod viverra lectus id aliquam.
-                  Cras eget odio mauris. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-                  inceptos himenaeos. Donec ipsum nulla, vestibulum id diam eu, malesuada malesuada ex. Vestibulum et
-                  volutpat mauris. Donec sagittis sem vitae lacinia pellentesque. Ut mattis viverra aliquam. </p>
+               <h1  style = "text-transform:uppercase;" >{{data.course_name}}</h1>
+               <p><h3 style = "text-transform:uppercase;"><u>Course Contents</u></h3>
+<h4>
+               {% for i in range(len2) %}
+   <li>{{details[i]['chapter_name']}}</li><br>
+                  {% endfor %}
+
+</h4>
+               </p>
             </div>
             <div class="col-sm-6 col-md-5 col-lg-5"
                style="border-color: rgb(0, 0, 0);border-top-color: rgb(0,;border-right-color: 0,;border-bottom-color: 0);border-left-color: 0,;background: #17193c;">
@@ -54,13 +54,7 @@
                {% if (test==1) %}<a class="btn btn-primary text-end" type="button"href="{{url_for('student_course_chapter',courseid=data.course_id)}}" style="background: rgb(255,14,14);">Go To Videos</a>{% endif %}
             </form>
                <div>
-                  <p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis mauris accumsan,
-                        aliquet dui vel, rutrum dolor. Nunc vitae auctor metus. Quisque posuere nibh ut sem
-                        tincidunt, quis feugiat elit lobortis. Sed ut fringilla purus. Suspendisse volutpat ex non
-                        sem vehicula venenatis ut sed purus. Nunc eget fermentum metus, non consectetur velit. Donec
-                        semper leo a tellus posuere mollis. Duis a eleifend metus. Sed viverra enim sit amet mattis
-                        viverra. Ut euismod viverra lectus id aliquam. Cras eget odio mauris. Class aptent taciti
-                        sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec&nbsp;</strong>
+                  <p><strong></strong>
                   </p>
                </div>
             </div>

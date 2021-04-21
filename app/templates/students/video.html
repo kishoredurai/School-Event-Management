@@ -4,9 +4,44 @@
 <html lang="en">
 
 <head>
+
+    <style>
+
+        progress {
+  text-align: center;
+  height: 1.5em;
+  width: 100%;
+  -webkit-appearance: none;
+  border: none;
+
+  /* Set the progressbar to relative */
+  position:relative;
+}
+progress:before {
+  content: attr(data-label);
+  font-size: 0.8em;
+  vertical-align: 0;
+
+  /*Position text over the progress bar */
+  position:absolute;
+  left:0;
+  right:0;
+}
+progress::-webkit-progress-bar {
+  background-color: #c9c9c9;
+}
+progress::-webkit-progress-value {
+  background-color: #7cc4ff;
+}
+progress::-moz-progress-bar {
+  background-color: #7cc4ff;
+}
+
+    </style>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
       <title>Course content</title>
+
       <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
       <link rel="stylesheet" href="{{ url_for('static', filename='fonts/fontawesome-all.min.css') }}">
@@ -30,15 +65,21 @@
 
                 <div class="card">
                     <div class="card-header" style="color:black;">
-                        Courses
+                        Courses<br>
+
                     </div>
                     <div class="card-body">
                         <div class="text-center">
                            <left><h2 style="color:black">{{content['video_name']}}</h2></left> 
 
 
-<video class="w-75" controls >
+<p>
+                            <div class="w3-light-grey" style="width:50%;margin: auto; display: block; border-radius: 50px;background-color: #f1f1f1;">
+                                <div class="w3-container w3-green " id="progressBar" style="border-radius: 50px;display:block;width:10px;background-color:greenyellow;" >0</div>
+                              </div>
 
+                           </p>
+<video class="w-75" id = "myVideo" controls ontimeupdate="Tracker()" controls onended="myFunction()" >
 
                                 <source src="{{ url_for('static', filename = content['video_path']) }}" type="video/mp4" >
                                 Your browser does not support the video tag.
@@ -47,6 +88,7 @@
 
                         <div class="p-2 text-muted text-center">
                             Published by BIT
+
                         </div>
 
 
@@ -68,13 +110,20 @@
             <div class="col-md-3 bg-light py-5 d-none d-sm-inline-block" >
                 <div class="list-group">
 
+
                     {%for i in range(0,len2)%}
 
                     {% if i==n %}
 
-                    <a href="{{url_for('video', c=content['course_chapter_id'],s=i)}}" class="list-group-item list-group-item-action active" aria-current="true"> <i class="fas fa-arrow-circle-right"></i> Video {{i+1}}</a>
+                    <a href="{{url_for('video', c=content['course_chapter_id'],s=i)}}" class="list-group-item list-group-item-action active" aria-current="true"> <i class="fas fa-arrow-circle-right" ></i> Video <b id="vid" style="font-size:20px;color:green;float:right;">&#10004;</b></a>
                         {% else %}
-                    <a href="{{url_for('video', c=content['course_chapter_id'],s=i)}}" class="list-group-item list-group-item-action" aria-current="false"><i class="fas fa-arrow-circle-right" style="color:black;"></i> Video {{i+1}}</a>
+                    <form action="{{url_for('video', c=content['course_chapter_id'],s=i)}}" method="get">
+
+                    <button type="submit" class="list-group-item list-group-item-action" aria-current="false"><i class="fas fa-arrow-circle-right" style="color:black;"></i> Video {{i+1}} {% if (percentage['progress_percentage']*len2)/100>=i+1 %}<b style="font-size:20px;color:green;float:right;">&#10004;</b>{% endif %}</button>
+                    <input type="text" id="myText" value=0 name="pro" hidden style="display: none;">
+                        <input type="text" id="my" value={{content['course_chapter_id']}} name="c" hidden style="display: none;">
+                        <input type="text" id="myTxt" value={{i}} name="s" hidden style="display: none;">
+                    </form>
                         {% endif %}
                     {% endfor %}
 
@@ -93,6 +142,55 @@
 
 
 
+
+
+    </script>
+ <script>
+
+ function myFunction() {
+  var num = (1/{{len2}})*100;
+ document.getElementById("myText").value = num;
+ document.getElementById('vid').style.display = "block";
+
+
+
+}
+        function video(){
+            var myVideo = document.getElementById ("myVideo");
+        console.log(myVideo.duration);
+        alert("start"+myVideo.played.end(0))
+        myVideo.ontimeupdate = function () {
+        var currentTime = Math.floor (myVideo.currentTime);
+        if (currentTime >= 120) {
+            document.getElementById("myBtn").style.width = "50%";
+         }
+
+        }
+
+    }
+     document.getElementById("myVideo").addEventListener("timeupdate", Tracker())
+    function Tracker (){
+        var myVideo = document.getElementById ("myVideo");
+        console.log("duration" + myVideo.duration);
+        // console.log("played: "+ myVideo.played.end(0))
+
+        console.log(myVideo.played.end(0))
+        console.log(myVideo.ended)
+        // if(myVideo.ended == true){
+        //     var count = 2
+
+        //     console.log("over")
+        //     document.getElementById('progressBar').style.width = 100/count + "%"
+        //     document.getElementById('progressBar').innerHTML = 100/count + "%"
+        // }
+
+
+
+            console.log("over")
+            document.getElementById('progressBar').style.width = (myVideo.currentTime / myVideo.duration)*100 + "%"
+            document.getElementById('progressBar').innerHTML =   Math.floor((myVideo.currentTime / myVideo.duration)*100)
+
+    }
 
 
     </script>

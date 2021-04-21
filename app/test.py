@@ -13,7 +13,7 @@ mydb = mysql.connector.connect(
 database="elearning"
 )
 mycursor = mydb.cursor()
-mycursor.execute("SELECT * FROM content_video,course_chapter_content where content_video.chapter_content_id = course_chapter_content.chapter_content_id and course_chapter_content.course_chapter_id =1004 ")
-
+#mycursor.execute("select * from course where course_enrollment.course_id in (select course_id from course_enrollment where student_id='602') ")
+mycursor.execute("select * from course_enrollment,course where course.course_id=course_enrollment.course_id and course_enrollment.student_id='602'")
 myresult = mycursor.fetchall()
 print(myresult)

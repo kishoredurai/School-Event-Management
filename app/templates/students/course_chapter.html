@@ -5,7 +5,8 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
       <title>Course content</title>
-      <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
       <link rel="stylesheet" href="{{ url_for('static', filename='fonts/fontawesome-all.min.css') }}">
       <link rel="stylesheet" href="{{ url_for('static', filename='fonts/font-awesome.min.css') }}">
@@ -14,6 +15,7 @@
       <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.min.css') }}">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
+      <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
    </head>
    <body>
 
@@ -164,8 +166,12 @@
             <p>{{vid[i]['chapter_description']}}</p>
             <div style="text-align:center">
                <a href="{{url_for('video', c=vid[i]['course_chapter_id'],s=0)}}">  <button  class="btn btn-light btn-lg" type="button">Go to Videos</button></a>
-            </div>
+            </div><br>
+             Progress:<div class="w3-light-grey w3-round-xlarge">
+                <div class="w3-container w3-blue w3-round-xlarge" style="width:75%;text-align:center;">75%</div></div>
+
          </div>
+
       </div>
       <br>{% endfor %}
       <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script><script src="{{ url_for('static', filename='js/script.min.js') }}"></script>

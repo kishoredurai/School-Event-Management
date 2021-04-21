@@ -123,11 +123,15 @@ def student_course_chapter():
         account = cursor.fetchone()
         cursor.execute('SELECT * FROM course_chapter WHERE course_id  = %s', [c])
         vid = cursor.fetchall()
+        cursor.execute('SELECT progress_percentage FROM course_enroll_progress WHERE course_chapter_id  = %s', (c,))
+        percentage = cursor.fetchone()
+
+
 
         cursor.execute('SELECT distinct subject.subject_name,course.subject_id FROM subject,course where course.subject_id=subject.subject_id and course.course_grade=%s',(session['grade'],))
         subject = cursor.fetchall()
 
-        return render_template('students/course_chapter.html',res=account, vid=vid,len2=len(vid), subject=subject, len=len(subject))
+        return render_template('students/course_chapter.html',res=account, vid=vid,len2=len(vid), subject=subject, len=len(subject),percentage=percentage)
     else:
         return redirect(url_for('login'))
 
@@ -159,7 +163,11 @@ def course_enroll():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('Select * from course where course_id = %s', [course_id])
         cc = cursor.fetchone()
-        cursor.execute('Select * from course_enrollment where  course_id = %s', [course_id])
+        cursor.execute('select * from course_chapter where course_id=%s',[course_id])
+        details=cursor.fetchall()
+
+
+        cursor.execute('Select * from course_enrollment where  course_id = %s and student_id=%s', [course_id,stu_id])
         courseenrol = cursor.fetchall()
         cursor.execute('SELECT * FROM student WHERE student_id = %s',[stu_id])
         account = cursor.fetchone()
@@ -168,7 +176,30 @@ def course_enroll():
         if(courseenrol):
             test=1
         
-        return render_template('students/course_enroll.html',data=cc,test=test,res=account, subject=subject, len=len(subject))
+        return render_template('students/course_enroll.html',data=cc,test=test,res=account,details=details,len2=len(details), subject=subject, len=len(subject))
+
+
+@app.route('/my_course', methods=["POST", "GET"])
+def my_course():
+    if 'username' in session and session.get("user_type") == 'student':
+        stu_id = session.get('id')
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+        cursor.execute("select * from course_enrollment,course where course.course_id=course_enrollment.course_id and course_enrollment.student_id=%s",([stu_id]))
+        my_course = cursor.fetchall()
+
+        cursor.execute(
+            'SELECT distinct subject.subject_name,course.subject_id FROM subject,course where course.subject_id=subject.subject_id and course.course_grade=%s',
+            (session['grade'],))
+        subject = cursor.fetchall()
+        print(stu_id)
+        print(my_course)
+        print(len(my_course))
+
+        cursor.execute('SELECT * FROM student WHERE student_id = %s', [stu_id])
+        account = cursor.fetchone()
+
+        return render_template('students/my_course.html',res=account,my_course=my_course,len1=len(my_course),len=len(subject),subject=subject)
 
 
 
@@ -191,28 +222,54 @@ def video():
     if 'username' in session and session.get("user_type") == 'student' :
         username = session['username']
         s=request.args.get('s')
-        print(s)
+
+        pro = request.args.get('pro')
+        print(pro)
+
+        c = request.args.get('c')
+        print(c)
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT progress_percentage FROM course_enroll_progress WHERE course_chapter_id  = %s', (c,))
+        percentage = cursor.fetchone()
+        print(percentage['progress_percentage'])
+
+
+
+
+
+        if pro != None:
+            pro = int(pro)
+            c1 = int(percentage['progress_percentage']) + pro
+            print(c1)
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('update course_enroll_progress set progress_percentage = %s WHERE course_chapter_id  = %s', (c1,c,))
+            mysql.connection.commit()
+
+
+
+
         if s==None:
             n=0
         else:
             n=int(s)
-            print(n)
 
-        c = request.args.get('c')
+
+
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM student WHERE student_contact  = %s', (username,))
         account = cursor.fetchone()
         cursor.execute('SELECT * FROM content_video,course_chapter_content where content_video.chapter_content_id = course_chapter_content.chapter_content_id and course_chapter_content.course_chapter_id =%s ', (c,))
         content = cursor.fetchall()
-        print(content)
+
+        cursor.execute('SELECT progress_percentage FROM course_enroll_progress WHERE course_chapter_id  = %s', (c,))
+        percentage = cursor.fetchone()
 
 
 
         cursor.execute('SELECT distinct subject.subject_name,course.subject_id FROM subject,course where course.subject_id=subject.subject_id and course.course_grade=%s',(session['grade'],))
         subject = cursor.fetchall()
 
-        return render_template('students/video.html', content=content[n],res=account, len2=len(content), n=n, subject=subject, len=len(subject),
-                               b=session['grade'])
+        return render_template('students/video.html', content=content[n],res=account, len2=len(content), n=n, subject=subject, len=len(subject),percentage=percentage,b=session['grade'])
     else:
         return redirect(url_for('login'))
         
@@ -234,17 +291,16 @@ def video():
 
 
 
-# @app.route("/changepwd", methods=["GET", "POST"])
-# def changepwd():
-#         msg=''
-#         if request.method == "POST":
-#             passwd = request.form.get("confirm_password")
 
-#             phone_number = session.get("username")
-#             print(phone_number)
-#             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#             cursor.execute('UPDATE students set pass=%s where mno=%s', [passwd,phone_number])
-#             mysql.connection.commit()
-#             msg="Password changed successfully !!!"
-#             return render_template('students/password.html',msg=msg)
-#         return render_template('password.html')
+
+#msg=''
+         #if request.method == "POST":
+            #passwd = request.form.get("confirm_password")
+
+            # phone_number = session.get("username")
+             #print(phone_number)
+            #cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+             #cursor.execute('UPDATE students set pass=%s where mno=%s', [passwd,phone_number])
+             #mysql.connection.commit()
+             #msg="Password changed successfully !!!"
+             #return render_template('students/password.html',msg=msg)

@@ -94,4 +94,4 @@ def changepwd():
             mysql.connection.commit()
             flash("Done !")
             return redirect(url_for('changepwd'))
-        return render_template("changepwd.html")
+        return render_template("changepass.html")
