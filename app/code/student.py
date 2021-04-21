@@ -155,6 +155,11 @@ def course_enroll():
                 cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
                 cursor.execute('insert into course_enrollment(student_id, course_id, enroll_status) values(%s,%s,"Registered")', [stu_id,course])
                 mysql.connection.commit()
+
+
+
+                #cursor.execute('insert into ')
+
                 flash("Course Enrolled Successfully!")
                 return redirect(url_for('course_enroll',courseid=course)) 
 
@@ -276,7 +281,18 @@ def video():
         
 
 
-        
+@app.route("/video_update/", methods=["POST","GET"])
+def video_update():
+
+    if request.method == "GET":
+        print("hi")
+
+        c = request.json('todo')
+
+        print(c)
+
+    return '''<h1>Fails</h1>'''
+
 
 
 
