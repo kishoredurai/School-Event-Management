@@ -158,6 +158,9 @@ def course_enroll():
                 last_id=cursor.lastrowid
 
                 print(last_id)
+
+                client.messages.create(to="+919787688154",from_="+15623795133",body="Hello from Python!")
+
                 # cursor.execute('insert into course_enroll_progress(course_chapter_id,enroll_id) select(course_chapter_id,"%s") from course_chapter where course_id=%s', [last_id,course])
                 # mysql.connection.commit()
                 #cursor.execute('insert into ')
