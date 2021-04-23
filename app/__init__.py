@@ -38,8 +38,9 @@ app.secret_key = '11sdcasd'
 
 api = AuthyApiClient('F79FjHOmziWHkVTBA9K6MgqUvKww3qui')
 
+#def name():
+ #   print('name')
 
 
 
-
-from app.code import login_logout,student,forgetpassword,signup
+from app.code import login_logout,student,forgetpassword,signup,method

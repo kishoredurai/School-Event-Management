@@ -124,7 +124,7 @@ input[type="number"] {
                     <div class="row text-start justify-content-center align-items-center" style="text-align: center;">
 
                         <div class="col-md-6 col-xl-3 mb-4">
-                            <a href="{{url_for('student_course_chapter', courseid=my_course[i]['course_id'])}}"style="text-decoration: none;">
+                            <a href="{{url_for('student_course_chapter', courseid=my_course[i]['course_id'],enroll_id=my_course[i]['enroll_id'])}}"style="text-decoration: none;">
                             <div class="card shadow border-start-primary py-2" data-bss-hover-animate="pulse"><img class="card-img-top w-100 d-block" src={{url_for('static',filename='img/edu.jpg')}} style="width: 100px;height: 200px;">
                                 <div class="card-body" style="height: 150px;">
                                     <div class="row align-items-center no-gutters">
@@ -153,7 +153,7 @@ input[type="number"] {
                         </div>
                        {%if i+1 < len1%}
                         <div class="col-md-6 col-xl-3 mb-4">
-                            <a href="{{url_for('student_course_chapter', courseid=my_course[i+1]['course_id'])}}"style="text-decoration: none;">
+                            <a href="{{url_for('student_course_chapter', courseid=my_course[i+1]['course_id'],enroll_id=my_course[i+1]['enroll_id'])}}"style="text-decoration: none;">
 
 
                             <div class="card shadow border-start-primary py-2" data-bss-hover-animate="pulse"><img class="card-img-top w-100 d-block" src={{url_for('static',filename='img/edu.jpg')}} style="width: 100px;height: 200px;">
@@ -178,7 +178,7 @@ input[type="number"] {
                      {% endif %}
                      {%if i+2 < len1%}
                         <div class="col-md-6 col-xl-3 mb-4">
-                    <a href="{{url_for('student_course_chapter', courseid=my_course[i+2]['course_id'])}}"style="text-decoration: none;">
+                    <a href="{{url_for('student_course_chapter', courseid=my_course[i+2]['course_id'],enroll_id=my_course[i+2]['enroll_id'])}}"style="text-decoration: none;">
 
                             <div class="card shadow border-start-primary py-2" data-bss-hover-animate="pulse"><img class="card-img-top w-100 d-block" src={{url_for('static',filename='img/edu.jpg')}} style="width: 100px;height: 200px;">
                                 <div class="card-body" style="height: 150px;">

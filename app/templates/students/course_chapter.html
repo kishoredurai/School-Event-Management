@@ -164,11 +164,20 @@
             <h1 style="text-transform: capitalize;">{{i+1}}. {{vid[i]['chapter_name']}}</h1>
             <hr>
             <p>{{vid[i]['chapter_description']}}</p>
+
+
+               <a href="{{url_for('video', c=vid[i]['course_chapter_id'],enroll_id=enroll_id)}}">  <button  class="btn btn-light btn-lg" type="button">Go to Videos</button></a><bR>
+             <br>
+            {% if percentage[i]['progress_percentage']==100 %}
+            <div style="border-radius:20px;width:300px;height:35px;background-color:white;padding:10px 5px;font-family: verdana;color:green;font-size:18px;float:right;"> &nbsp; &nbsp;&nbsp;&nbsp;Status: Completed <i class="fa fa-check-circle" aria-hidden="true" style="float:right;font-size:25px;"></i></div>
+           {% else %}
+            <div style="border-radius:20px;width:300px;height:35px;background-color:white;padding:10px 5px;font-family: verdana;color:red;font-size:18px;float:right;"> &nbsp; &nbsp;&nbsp;&nbsp;Status: Yet to complete </div>
+            {% endif %}
+
+            </div>
+
             <div style="text-align:center">
-               <a href="{{url_for('video', c=vid[i]['course_chapter_id'],s=0)}}">  <button  class="btn btn-light btn-lg" type="button">Go to Videos</button></a>
-            </div><br>
-             Progress:<div class="w3-light-grey w3-round-xlarge">
-                <div class="w3-container w3-blue w3-round-xlarge" style="width:75%;text-align:center;">75%</div></div>
+
 
          </div>
 

@@ -118,20 +118,22 @@ def student_course_chapter():
         username = session['username']
         stu_id=session.get('id')
         c = request.args.get('courseid')
+        enroll_id=request.args.get('enroll_id')
+        print(enroll_id)
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM student WHERE student_id  = %s', [stu_id])
         account = cursor.fetchone()
         cursor.execute('SELECT * FROM course_chapter WHERE course_id  = %s', [c])
         vid = cursor.fetchall()
-        cursor.execute('SELECT progress_percentage FROM course_enroll_progress WHERE course_chapter_id  = %s', (c,))
-        percentage = cursor.fetchone()
+        cursor.execute('SELECT progress_percentage FROM course_enroll_progress WHERE enroll_id  = %s', (enroll_id,))
+        percentage = cursor.fetchall()
 
 
 
         cursor.execute('SELECT distinct subject.subject_name,course.subject_id FROM subject,course where course.subject_id=subject.subject_id and course.course_grade=%s',(session['grade'],))
         subject = cursor.fetchall()
 
-        return render_template('students/course_chapter.html',res=account, vid=vid,len2=len(vid), subject=subject, len=len(subject),percentage=percentage)
+        return render_template('students/course_chapter.html',res=account, vid=vid,len2=len(vid), subject=subject, len=len(subject),percentage=percentage,enroll_id=enroll_id)
     else:
         return redirect(url_for('login'))
 
@@ -173,7 +175,8 @@ def course_enroll():
 
 
         cursor.execute('Select * from course_enrollment where  course_id = %s and student_id=%s', [course_id,stu_id])
-        courseenrol = cursor.fetchall()
+        courseenrol = cursor.fetchone()
+
         cursor.execute('SELECT * FROM student WHERE student_id = %s',[stu_id])
         account = cursor.fetchone()
         cursor.execute('SELECT distinct subject.subject_name,course.subject_id FROM subject,course where course.subject_id=subject.subject_id and course.course_grade=%s',[account['student_grade']])
@@ -181,7 +184,7 @@ def course_enroll():
         if(courseenrol):
             test=1
         
-        return render_template('students/course_enroll.html',data=cc,test=test,res=account,details=details,len2=len(details), subject=subject, len=len(subject))
+        return render_template('students/course_enroll.html',data=cc,test=test,res=account,details=details,len2=len(details), subject=subject, courseenrol=courseenrol,len=len(subject))
 
 
 @app.route('/my_course', methods=["POST", "GET"])
@@ -226,37 +229,32 @@ def my_course():
 def video():
     if 'username' in session and session.get("user_type") == 'student' :
         username = session['username']
-        s=request.args.get('s')
+        enroll_id=request.args.get('enroll_id')
+        #s=request.args.get('s')
 
-        pro = request.args.get('pro')
-        print(pro)
+        #pro = request.args.get('pro')
+        #print(pro)
+        # c stands for course chapter id
 
         c = request.args.get('c')
         print(c)
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT progress_percentage FROM course_enroll_progress WHERE course_chapter_id  = %s', (c,))
-        percentage = cursor.fetchone()
-        print(percentage['progress_percentage'])
 
 
 
 
 
-        if pro != None:
-            pro = int(pro)
-            c1 = int(percentage['progress_percentage']) + pro
-            print(c1)
-            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('update course_enroll_progress set progress_percentage = %s WHERE course_chapter_id  = %s', (c1,c,))
-            mysql.connection.commit()
 
 
 
 
-        if s==None:
-            n=0
-        else:
-            n=int(s)
+
+
+
+
+        #if s==None:
+        #    n=0
+        #else:
+         #   n=int(s)
 
 
 
@@ -266,7 +264,7 @@ def video():
         cursor.execute('SELECT * FROM content_video,course_chapter_content where content_video.chapter_content_id = course_chapter_content.chapter_content_id and course_chapter_content.course_chapter_id =%s ', (c,))
         content = cursor.fetchall()
 
-        cursor.execute('SELECT progress_percentage FROM course_enroll_progress WHERE course_chapter_id  = %s', (c,))
+        cursor.execute('SELECT progress_percentage FROM course_enroll_progress WHERE course_chapter_id= %s and enroll_id=%s ', (c,enroll_id))
         percentage = cursor.fetchone()
 
 
@@ -274,7 +272,7 @@ def video():
         cursor.execute('SELECT distinct subject.subject_name,course.subject_id FROM subject,course where course.subject_id=subject.subject_id and course.course_grade=%s',(session['grade'],))
         subject = cursor.fetchall()
 
-        return render_template('students/video.html', content=content[n],res=account, len2=len(content), n=n, subject=subject, len=len(subject),percentage=percentage,b=session['grade'])
+        return render_template('students/video.html', content=content,res=account, len2=len(content), subject=subject, len=len(subject),percentage=percentage,enroll_id=enroll_id ,c=c,b=session['grade'])
     else:
         return redirect(url_for('login'))
         
@@ -287,11 +285,18 @@ def video_update():
     if request.method == "GET":
         print("hi")
 
-        c = request.json('todo')
+        percentage = request.args.get('percentage')
+        enroll_id=request.args.get('enroll_id')
+        ch_id=request.args.get('ch_id')
 
-        print(c)
+        print(ch_id)
+        print(enroll_id)
+        print(percentage)
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('update course_enroll_progress set progress_percentage = %s where enroll_id =%s and course_chapter_id=%s', (percentage,enroll_id,ch_id))
+        mysql.connection.commit()
 
-    return '''<h1>Fails</h1>'''
+        return render_template('students/video.html')
 
 
 
