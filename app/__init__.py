@@ -10,6 +10,8 @@ from mysql import connector
 import rsa
 import os
 from werkzeug.utils import secure_filename
+from twilio.rest import Client
+
 
 publicKey, privateKey = rsa.newkeys(512)
 
@@ -41,6 +43,8 @@ api = AuthyApiClient('F79FjHOmziWHkVTBA9K6MgqUvKww3qui')
 #def name():
  #   print('name')
 
+
+client = Client("ACdf7e585c51932028022329e85eafa20b", "173667094c856c953483f3d0d0ecf8d0")
 
 
 from app.code import login_logout,student,forgetpassword,signup,method
