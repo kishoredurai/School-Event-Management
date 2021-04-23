@@ -232,16 +232,11 @@ def video():
     if 'username' in session and session.get("user_type") == 'student' :
         username = session['username']
         enroll_id=request.args.get('enroll_id')
-        #s=request.args.get('s')
+        c=request.args.get('c')
 
         #pro = request.args.get('pro')
         #print(pro)
-        # c stands for course chapter id
-
-        c = request.args.get('c')
-        print(c)
-
-
+        # c stands for course chapter video_update
 
 
 
@@ -302,14 +297,52 @@ def video_update():
 
 
 
+#############################   CHANGE PASSWORD ########################################
+
+@app.route("/change_password", methods=["POST","GET"])
+def student_changepassword():
+
+    if 'username' in session and session.get("user_type") == 'student':
+
+        stu_id = session.get('id')
+
+        if request.method == "POST":
+
+            if request.form.get("change"):
+
+                password = request.form['password']
+                confirm_password = request.form['confirm_password']
+
+                if(password == confirm_password):
+
+                    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+                    cursor.execute('update student set student_password = %s where student_id = %s', (password,stu_id))
+                    mysql.connection.commit()
+                    flash("Password Updated Successfully !", "success")
+                    return redirect(url_for('student_changepassword'))
+                else:
+
+                    flash("Password Doesnt Match !", "warning")
+                    return redirect(url_for('student_changepassword'))
+
+
+
+        stu_id=session.get('id')
+        username = session['username']
+        grade=session['grade']
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM student WHERE student_id  = %s', [stu_id])
+        account = cursor.fetchone()
+        cursor.execute('SELECT distinct subject.subject_name,course.subject_id FROM subject,course where course.subject_id=subject.subject_id and course.course_grade=%s',[grade])
+        subject = cursor.fetchall()
+        
+        return render_template('students/change_password.html', res=account, subject=subject, len=len(subject))
 
 
 
 
 
-
-
-
+##############################################################################################
 
 
 

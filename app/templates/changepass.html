@@ -1,16 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
 
-
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><title>login form</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>login form</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap23.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles23.min.css')}}"></head>
-<body><div class="container full-height"><div class="row flex center v-center full-height">
-    <div class="col-sm-4 col-xs-8"><div class="form-box"><form><fieldset style="width: 252px;height: 197px;">
-        <legend>Change Password</legend>
-        <input class="form-control" type="email" id="username" name="username" placeholder="New Password">
-        <input class="form-control" type="password" id="password" name="password" placeholder="Retype New Password">
-        <button class="btn btn-primary btn-block" type="button" style="background: rgb(33,53,105);">RESET</button>
-    </fieldset></form></div></div></div></div>
-<script src="{{ url_for('static', filename='js/jquery1.min.js')}}"></script>
-<script src="{{ url_for('static', filename='bootstrap/js/bootstrap1.min.js')}}"></script></body></html>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles23.min.css')}}">
+</head>
 
+<body>
+    <div class="container full-height">
+        <div class="row flex center v-center full-height">
+            <div class="col-sm-4 col-xs-8">
+                <div class="form-box">
+                    <form>
+                        <fieldset style="width: 252px;height: 197px;">
+                            <legend>Change Password</legend>
+                            <input class="form-control" type="email" id="username" name="username"
+                                placeholder="New Password">
+                            <input class="form-control" type="password" id="password" name="password"
+                                placeholder="Retype New Password">
+                            <button class="btn btn-primary btn-block" type="button"
+                                style="background: rgb(33,53,105);">RESET</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/jquery1.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap1.min.js')}}"></script>
+</body>
+
+</html>
